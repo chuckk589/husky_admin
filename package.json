@@ -19,7 +19,7 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build&&yarn run vite",
+    "build": "nest build",
     "vite": "cd vue&&yarn run build",
     "start:dev": "SET NODE_ENV=dev&&nodemon src/main.ts",
     "start:prod": "node dist/main",

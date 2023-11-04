@@ -6,13 +6,9 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      PGDATA: /data/postgres
-    volumes:
-       - postgres:/data/postgres
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
     ports:
       - "5432:5432"
-    networks:
-      - postgres
     restart: unless-stopped
   app:
     depends_on:
@@ -29,9 +25,6 @@ services:
       - $PORT:$PORT
     networks:
       - postgres
-volumes:
-  postgres: 
-networks:
-  postgres:
-    driver: bridge
+    stdin_open: true
+    tty: true
   

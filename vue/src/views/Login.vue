@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       username: '',
-      password: '',
+      password: '4060510368',
       errorMessage: '',
     };
   },
@@ -43,7 +43,7 @@ export default {
         })
         .then((res) => {
           localStorage.setItem('jwt', res.data.access_token);
-          this.$router.push({ name: 'users' });
+          this.$router.push({ name: 'models' });
         })
         .catch((err) => {
           this.errorMessage = err.response.data.message;

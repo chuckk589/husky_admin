@@ -11,12 +11,12 @@ export class ConfigsService {
   constructor(private readonly em: EntityManager) {}
 
   async updateMeta(updateMetaDto: UpdateMetaDto) {
-    fs.writeFileSync('./dist/public/files/meta.json', JSON.stringify(updateMetaDto));
+    fs.writeFileSync('./dist/public/meta.json', JSON.stringify(updateMetaDto));
     return updateMetaDto;
   }
 
   async findMeta() {
-    return JSON.parse(fs.readFileSync('./dist/public/files/meta.json', 'utf8'));
+    return JSON.parse(fs.readFileSync('./dist/public/meta.json', 'utf8'));
   }
 
   async findAll(): Promise<RetrieveConfigDto[]> {
