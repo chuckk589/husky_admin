@@ -3,12 +3,13 @@ services:
   postgres:
     container_name: postgres_container
     image: postgres
+    env_file: ./.env
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: ${POSTGRES_DB:-postgres}
     volumes:
-      - postgres_db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     restart: unless-stopped
@@ -29,4 +30,5 @@ services:
       - postgres
     stdin_open: true
     tty: true
-  
+volumes: 
+  db:
