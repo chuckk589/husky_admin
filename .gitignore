@@ -1,7 +1,7 @@
 # compiled output
 /dist
 /node_modules
-/my-entities
+/my-entities/
 /vue/node_modules
 
 # Logs
