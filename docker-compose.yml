@@ -1,25 +1,19 @@
 version: '3.8'
 services:
-  adminer:
-    image: adminer:latest
-    restart: unless-stopped
+  postgres:
+    container_name: postgres_container
+    image: postgres
     environment:
-      ADMINER_DEFAULT_SERVER: mysqldb
-    ports:
-      - 8080:8080
-  mysqldb:
-    image: mysql:5.7
-    restart: unless-stopped
-    env_file: ./.env
-    command: [ "mysqld", "--default-authentication-plugin=mysql_native_password" ]
-    environment:
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_ROOT_PASSWORD=$DB_PASSWORD
-      - MYSQL_DATABASE=$DB_NAME
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      PGDATA: /data/postgres
     volumes:
-      - db:/var/lib/mysql
+       - postgres:/data/postgres
     ports:
-    - 3308:3306
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
   app:
     depends_on:
       - mysqldb
@@ -33,11 +27,10 @@ services:
       - NODE_ENV=${NODE_ENV}
     volumes:
       - ./src/:/app/src/
-      - static:/app/dist/public/files
     ports:
       - $PORT:$PORT
     stdin_open: true
     tty: true
-volumes: 
-    db:
-    static:
+volumes:
+  postgres: 
+  
