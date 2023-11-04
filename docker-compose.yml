@@ -26,8 +26,6 @@ services:
       - NODE_ENV=${NODE_ENV}
     ports:
       - $PORT:$PORT
-    networks:
-      - postgres
     stdin_open: true
     tty: true
 volumes: 
