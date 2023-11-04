@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
   app:
     depends_on:
-      - mysqldb
+      - postgres
     build:
       context: .
       target: builder
@@ -25,12 +25,13 @@ services:
     env_file: ./.env
     environment:
       - NODE_ENV=${NODE_ENV}
-    volumes:
-      - ./src/:/app/src/
     ports:
       - $PORT:$PORT
-    stdin_open: true
-    tty: true
+    networks:
+      - postgres
 volumes:
   postgres: 
+networks:
+  postgres:
+    driver: bridge
   
