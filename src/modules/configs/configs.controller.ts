@@ -24,6 +24,7 @@ export class ConfigsController {
   updateMeta(@Body() updateMetaDto: UpdateMetaDto) {
     return this.configsService.updateMeta(updateMetaDto);
   }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateConfigDto: UpdateConfigDto) {
     return this.configsService.update(+id, updateConfigDto);

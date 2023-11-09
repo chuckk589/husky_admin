@@ -24,7 +24,6 @@ export default {
     },
     composeFields() {
       const keys = Object.keys(this.params.relations);
-      console.log(this.params.data);
       return Object.keys(this.params.data)
         .map((key) => {
           if (keys.includes(key)) {
@@ -42,7 +41,7 @@ export default {
             };
           }
         })
-        .filter((c) => c.key !== 'id' && c.key !== 'action');
+        .filter((c) => c.key !== 'id' && c.key !== '_action');
     },
   },
 };

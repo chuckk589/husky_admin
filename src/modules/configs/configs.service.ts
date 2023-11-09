@@ -1,22 +1,32 @@
 import { RetrieveConfigDto } from './dto/retrieve-config.dto';
 import { EntityManager } from '@mikro-orm/core';
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { Config } from '../mikroorm/entities/Config';
 import fs from 'fs';
 import { UpdateConfigDto } from './dto/update-config.dto';
-import { UpdateMetaDto } from './dto/update-meta.dto';
+import { Schema, UpdateMetaDto } from './dto/update-meta.dto';
 
 @Injectable()
 export class ConfigsService {
   constructor(private readonly em: EntityManager) {}
 
   async updateMeta(updateMetaDto: UpdateMetaDto) {
-    fs.writeFileSync('./dist/public/meta.json', JSON.stringify(updateMetaDto));
+    const schema: Schema[] = JSON.parse(fs.readFileSync('./dist/public/schema.json', 'utf8'));
+    const schemas = Array.isArray(updateMetaDto.schema) ? updateMetaDto.schema : [updateMetaDto.schema];
+    for (const update of schemas) {
+      const index = schema.findIndex((item) => item.title === update.title);
+      if (index !== -1) {
+        schema[index] = update;
+      } else {
+        throw new HttpException({ message: 'Schema not found' }, 404);
+      }
+    }
+    fs.writeFileSync('./dist/public/schema.json', JSON.stringify(schema));
     return updateMetaDto;
   }
 
   async findMeta() {
-    return JSON.parse(fs.readFileSync('./dist/public/meta.json', 'utf8'));
+    return JSON.parse(fs.readFileSync('./dist/public/schema.json', 'utf8'));
   }
 
   async findAll(): Promise<RetrieveConfigDto[]> {

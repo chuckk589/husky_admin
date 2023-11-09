@@ -7,11 +7,13 @@ import axios from './axios';
 import emitter from './eventBus';
 import 'ag-grid-enterprise';
 import { LicenseManager } from 'ag-grid-enterprise';
+import pinia from './plugins/pinia';
 LicenseManager.setLicenseKey('[v228]__MTUwNDA0NzYwMDAwMA==b6ad7a19dbec1f3b7ba7f0245269f807');
 loadFonts();
 
 const app = createApp(App);
 app.use(router);
+app.use(pinia);
 app.use(vuetify);
 app.config.globalProperties.$http = axios;
 app.config.globalProperties.$emitter = emitter;

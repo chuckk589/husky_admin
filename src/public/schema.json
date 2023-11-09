@@ -1,0 +1,1433 @@
+[
+  {
+    "title": "achievments",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "type": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "award_key": {
+        "type": "string",
+        "comment": "Ключ получаемой награды"
+      },
+      "award_name": {
+        "type": "string",
+        "comment": "Название получаемой награды"
+      },
+      "icon": {
+        "type": "string"
+      },
+      "actions": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "comment": "Массив из объектов действий необходимых для получения ачивки"
+      }
+    },
+    "required": [
+      "type",
+      "name",
+      "description",
+      "award_key",
+      "award_name",
+      "icon",
+      "actions"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "actions",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "name": {
+        "type": "string"
+      },
+      "group": {
+        "type": "number"
+      },
+      "animation_id": {
+        "type": "number"
+      },
+      "rules": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "comment": "Правила для выполнения действий, тут указываются ключи, вся логика в коде прописывается"
+      },
+      "min_time": {
+        "type": "number"
+      },
+      "max_time": {
+        "type": "number"
+      },
+      "unique": {
+        "type": "boolean"
+      },
+      "condition_ids": {
+        "type": [
+          "object",
+          "string"
+        ]
+      }
+    },
+    "required": [
+      "name",
+      "group",
+      "animation_id",
+      "rules",
+      "min_time",
+      "max_time",
+      "unique",
+      "condition_ids"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "buffs",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "group": {
+        "type": "number",
+        "comment": "У одной группы не может быть бафф и дебафф одновременно!!"
+      },
+      "type": {
+        "type": "string"
+      },
+      "positive": {
+        "type": "boolean",
+        "comment": "Является ли бонус положительным"
+      },
+      "multiply": {
+        "type": "number",
+        "comment": "множитель бонуса в процентах"
+      },
+      "name": {
+        "type": "string"
+      },
+      "icon": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "metadata": {
+        "type": "string",
+        "comment": "конкретизация на что бонус, используется не везде, и для каждого случая свое значение"
+      }
+    },
+    "required": [
+      "group",
+      "type",
+      "positive",
+      "multiply",
+      "name",
+      "icon",
+      "description",
+      "metadata"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "character_duplicate_fines",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "count_duplicates": {
+        "type": "number"
+      },
+      "fine_percent": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "count_duplicates",
+      "fine_percent"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "character_levels",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "level": {
+        "type": "number"
+      },
+      "from_exp": {
+        "type": "number"
+      },
+      "price": {
+        "type": "number"
+      },
+      "efficiency_for_level": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "level",
+      "from_exp",
+      "price",
+      "efficiency_for_level"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "character_perks",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "name": {
+        "type": "string"
+      },
+      "icon": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "value": {
+        "type": "number",
+        "comment": "Указывается в зависимости от перка, нужен не везде"
+      }
+    },
+    "required": [
+      "name",
+      "icon",
+      "value"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "character_puzzle_chances",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "chance": {
+        "type": "number"
+      },
+      "character_id": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "chance"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "characters",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "template_name": {
+        "type": "string"
+      },
+      "group": {
+        "type": "number"
+      },
+      "promo_image": {
+        "type": "string"
+      },
+      "avatar": {
+        "type": "string"
+      },
+      "model": {
+        "type": "string"
+      },
+      "actions": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "comment": "Доступные персонажу действия"
+      },
+      "friends": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "things": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "comment": "Список ид вещей, который у этого персонажа, указывается по очередности уровней"
+      },
+      "perks": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "can_be_starter": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "template_name",
+      "group",
+      "promo_image",
+      "avatar",
+      "model",
+      "actions",
+      "friends",
+      "things",
+      "perks",
+      "can_be_starter"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "characters_requirements",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "book_row": {
+        "type": "number"
+      },
+      "furniture_id": {
+        "type": "number",
+        "comment": "Если group = -1"
+      },
+      "furniture_group": {
+        "type": "number",
+        "comment": "Если id = -1"
+      },
+      "character_id": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "book_row",
+      "furniture_id",
+      "furniture_group"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "constants",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "key": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "num_value": {
+        "type": "number"
+      },
+      "str_value": {
+        "type": "string"
+      },
+      "flt_value": {
+        "type": "number"
+      },
+      "arr_value": {
+        "type": [
+          "object",
+          "string"
+        ]
+      }
+    },
+    "required": [
+      "key",
+      "type"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "consumables",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "group": {
+        "type": "number"
+      },
+      "name": {
+        "type": "string"
+      },
+      "icon": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "use_type": {
+        "type": "string"
+      },
+      "max_count": {
+        "type": "number"
+      },
+      "use_count": {
+        "type": "number"
+      },
+      "buff_id": {
+        "type": "number"
+      },
+      "value": {
+        "type": "number"
+      },
+      "only_characters": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "group",
+      "name",
+      "icon",
+      "description",
+      "use_type",
+      "max_count",
+      "use_count",
+      "value",
+      "only_characters"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "dialogs",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "messages": {
+        "type": [
+          "object",
+          "string"
+        ]
+      }
+    },
+    "required": [
+      "messages"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "en_lang",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "key": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "key",
+      "type",
+      "text"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "es_lang",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "key": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "key",
+      "type",
+      "text"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "floors",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      }
+    },
+    "required": [],
+    "formatter": []
+  },
+  {
+    "title": "furniture_puzzle_chances",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "chance": {
+        "type": "number"
+      },
+      "furniture_id": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "chance"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "furnitures",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "name": {
+        "type": "string"
+      },
+      "category": {
+        "type": "number"
+      },
+      "description": {
+        "type": "string"
+      },
+      "promo_image": {
+        "type": "string"
+      },
+      "icon": {
+        "type": "string"
+      },
+      "model": {
+        "type": "string"
+      },
+      "occupy": {
+        "type": "boolean"
+      },
+      "is_wall_object": {
+        "type": "boolean"
+      },
+      "rules": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "prestige": {
+        "type": "number"
+      },
+      "optimal_requirement": {
+        "type": "number"
+      },
+      "max_requirement": {
+        "type": "number"
+      },
+      "size": {
+        "type": [
+          "object",
+          "string"
+        ]
+      }
+    },
+    "required": [
+      "name",
+      "category",
+      "description",
+      "promo_image",
+      "icon",
+      "model",
+      "occupy",
+      "is_wall_object",
+      "rules",
+      "prestige",
+      "optimal_requirement",
+      "max_requirement",
+      "size"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "groups_tiles",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "size": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "position": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "cost": {
+        "type": "number"
+      },
+      "previous": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "sector": {
+        "type": "number"
+      },
+      "is_start": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "size",
+      "position",
+      "cost",
+      "previous",
+      "sector",
+      "is_start"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "letters",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "is_everyone": {
+        "type": "boolean"
+      },
+      "subject": {
+        "type": "string"
+      },
+      "message": {
+        "type": "string"
+      },
+      "items": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "time": {
+        "type": "number"
+      },
+      "senderId": {
+        "type": "number"
+      },
+      "recipientId": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "is_everyone",
+      "subject",
+      "message",
+      "time"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_character_actions",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "character_id": {
+        "type": "number"
+      },
+      "action_config_id": {
+        "type": "number"
+      },
+      "time_end": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "character_id",
+      "action_config_id",
+      "time_end"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_character_buffs",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "action_name": {
+        "type": "string"
+      },
+      "config_id": {
+        "type": "number"
+      },
+      "buff_time": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "action_name",
+      "config_id",
+      "buff_time"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_character_interactions",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "character_id": {
+        "type": "number"
+      },
+      "action_name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "character_id",
+      "action_name"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_character_raids",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "location_config_id": {
+        "type": "number"
+      },
+      "minutes": {
+        "type": "number"
+      },
+      "start_time": {
+        "type": "number"
+      },
+      "end_time": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "location_config_id",
+      "minutes",
+      "start_time",
+      "end_time"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_furniture_interactions",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "furniture_id": {
+        "type": "number"
+      },
+      "action": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "furniture_id",
+      "action"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_group_tiles",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "config_id": {
+        "type": "number"
+      },
+      "floor_id": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "config_id",
+      "floor_id"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_inventory_consumables",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "consumable_config_id": {
+        "type": "number"
+      },
+      "count": {
+        "type": "number"
+      },
+      "action_name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "consumable_config_id",
+      "count",
+      "action_name"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_inventory_things",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "thing_id": {
+        "type": "number"
+      },
+      "thing_config_id": {
+        "type": "number"
+      },
+      "action_name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "thing_id",
+      "thing_config_id",
+      "action_name"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_loot_box_creations",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "type": {
+        "type": "string"
+      },
+      "loot_box_id": {
+        "type": "number"
+      },
+      "location_config_id": {
+        "type": "number"
+      },
+      "items": {
+        "type": [
+          "object",
+          "string"
+        ]
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "type",
+      "loot_box_id",
+      "location_config_id",
+      "items"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_loot_box_opens",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "type": {
+        "type": "string"
+      },
+      "loot_box_id": {
+        "type": "number"
+      },
+      "loot_box_config_id": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "type",
+      "loot_box_id",
+      "loot_box_config_id"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_player_gates",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "action": {
+        "type": "string"
+      },
+      "ip": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "action"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_server",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "type": {
+        "type": "string"
+      },
+      "data": {
+        "type": "string"
+      },
+      "time": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "type",
+      "data",
+      "time"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_soft_currency",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "action_name": {
+        "type": "string"
+      },
+      "is_addition": {
+        "type": "boolean"
+      },
+      "amount": {
+        "type": "number"
+      },
+      "balance": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "action_name",
+      "is_addition",
+      "amount",
+      "balance"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "logs_user_achievments",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "player_id": {
+        "type": "number"
+      },
+      "time": {
+        "type": "number"
+      },
+      "achievment_config_id": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "player_id",
+      "time",
+      "achievment_config_id"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "loot_box_group_chances",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "group_name": {
+        "type": "string"
+      },
+      "chance": {
+        "type": "number"
+      },
+      "loot_box_id": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "group_name",
+      "chance"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "loot_box_items",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "group_name": {
+        "type": "string"
+      },
+      "config_id": {
+        "type": "number"
+      },
+      "chance": {
+        "type": "number"
+      },
+      "count": {
+        "type": "number"
+      },
+      "loot_box_id": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "group_name",
+      "config_id",
+      "chance",
+      "count"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "loot_boxes",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "type": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "icon": {
+        "type": "string"
+      },
+      "min_items": {
+        "type": "number"
+      },
+      "max_items": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "type",
+      "name",
+      "icon",
+      "min_items",
+      "max_items"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "loot_boxes_price",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "bought_count": {
+        "type": "number"
+      },
+      "price": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "bought_count",
+      "price"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "max_by_group_tiles",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "count_group_tiles": {
+        "type": "number"
+      },
+      "max_prestige": {
+        "type": "number"
+      },
+      "max_soft_currency": {
+        "type": "number"
+      },
+      "max_friends": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "count_group_tiles",
+      "max_prestige",
+      "max_soft_currency",
+      "max_friends"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "player_chains_progress",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "chainId": {
+        "type": "number"
+      },
+      "actionId": {
+        "type": "number"
+      }
+    },
+    "required": [],
+    "formatter": []
+  },
+  {
+    "title": "player_characters",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "exp": {
+        "type": "number"
+      },
+      "dirty": {
+        "type": "boolean"
+      },
+      "sector": {
+        "type": "number"
+      },
+      "last_tick": {
+        "type": "number"
+      },
+      "efficiency": {
+        "type": "number"
+      },
+      "buffs": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "position": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "things": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "raid": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "action": {
+        "type": [
+          "object",
+          "string"
+        ]
+      },
+      "placed": {
+        "type": "boolean"
+      },
+      "nft_key": {
+        "type": "string"
+      },
+      "playerId": {
+        "type": "number"
+      },
+      "configId": {
+        "type": "number"
+      },
+      "level": {
+        "type": "number"
+      },
+      "satisfaction": {
+        "type": [
+          "object",
+          "string"
+        ]
+      }
+    },
+    "required": [
+      "exp",
+      "dirty",
+      "sector",
+      "last_tick",
+      "efficiency",
+      "buffs",
+      "position",
+      "things",
+      "action",
+      "placed",
+      "nft_key",
+      "level",
+      "satisfaction"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "player_consumables",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "count": {
+        "type": "number"
+      },
+      "playerId": {
+        "type": "number"
+      },
+      "configId": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "count"
+    ],
+    "formatter": []
+  },
+  {
+    "title": "player_floors",
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "number"
+      },
+      "soft_currency": {
+        "type": "number"
+      },
+      "playerId": {
+        "type": "number"
+      },
+      "configId": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "soft_currency"
+    ],
+    "formatter": []
+  }
+]

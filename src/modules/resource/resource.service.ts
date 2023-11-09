@@ -1,22 +1,18 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
-import { CloneResourceDto, DtoFactory, ResourceDto, ResourcePopulated, RetrieveResourceDto } from './dto/resource.dto';
+import { CloneResourceDto, ResourceDto, ResourcePopulated, RetrieveResourceDto } from './dto/resource.dto';
 import { EntityManager } from '@mikro-orm/mysql';
-import { PG_CONNECTION } from 'src/constants';
-import { validate } from 'class-validator';
+import { AJVPROVIDER, PG_CONNECTION } from 'src/constants';
 import { PostgresDatabaseProvider } from '../providers/PGConnection';
+import { AjvValidator } from '../providers/ajv';
 
 @Injectable()
 export class ResourceService {
-  constructor(private readonly em: EntityManager, @Inject(PG_CONNECTION) private db: PostgresDatabaseProvider) {}
+  constructor(private readonly em: EntityManager, @Inject(PG_CONNECTION) private db: PostgresDatabaseProvider, @Inject(AJVPROVIDER) private ajv: AjvValidator) {}
 
   async clone(cloneResourceDto: CloneResourceDto) {
     try {
+      //no validation for now
       const { model, ...rest } = cloneResourceDto;
-      const dtoName = `Create${cloneResourceDto.model
-        .split('_')
-        .map((c) => c[0].toUpperCase() + c.slice(1))
-        .join('')}Dto`;
-      await DtoFactory(dtoName, rest.entities);
 
       //insert all entities
       let query = '';
@@ -34,7 +30,7 @@ export class ResourceService {
       }
       return res.map((entity: any) => new RetrieveResourceDto({ id: entity.rows[0].id, ...entity.rows[0] }));
     } catch (error) {
-      throw new HttpException({ message: error.message || error }, 500);
+      throw new HttpException({ message: error.message || error }, 400);
     }
   }
   async findModels() {
@@ -42,7 +38,7 @@ export class ResourceService {
       const models = await this.db.client.query(`SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'`);
       return models.rows.map((row: any) => row.table_name);
     } catch (error) {
-      throw new HttpException({ message: error.message || error }, 500);
+      throw new HttpException({ message: error.message || error }, 400);
     }
   }
 
@@ -51,18 +47,13 @@ export class ResourceService {
       await this.db.client.query(`DELETE FROM ${removeResourceDto.model} WHERE id IN (${ids.join(',')})`);
       return ids;
     } catch (error) {
-      throw new HttpException({ message: error.message || error }, 500);
+      throw new HttpException({ message: error.message || error }, 400);
     }
   }
   async create(createResourceDto: ResourceDto) {
     try {
+      this.ajv.validate(createResourceDto.model, createResourceDto);
       const { model, ...rest } = createResourceDto;
-      const dtoName = `Create${createResourceDto.model
-        .split('_')
-        .map((c) => c[0].toUpperCase() + c.slice(1))
-        .join('')}Dto`;
-
-      await DtoFactory(dtoName, [rest]);
 
       const res = await this.db.client.query(
         `INSERT INTO ${model} (${Object.keys(rest)
@@ -73,17 +64,14 @@ export class ResourceService {
       );
       return new RetrieveResourceDto({ id: res.rows[0].id, ...rest });
     } catch (error) {
-      throw new HttpException({ message: error.message || error }, 500);
+      throw new HttpException({ message: error.message || error }, 400);
     }
   }
   async update(id: number, updateResourceDto: ResourceDto) {
     try {
+      this.ajv.validate(updateResourceDto.model, updateResourceDto, true);
+
       const { model, ...rest } = updateResourceDto;
-      const dtoName = `Update${updateResourceDto.model
-        .split('_')
-        .map((c) => c[0].toUpperCase() + c.slice(1))
-        .join('')}Dto`;
-      await DtoFactory(dtoName, [rest]);
 
       await this.db.client.query(
         `UPDATE ${model} SET ${Object.keys(rest)
@@ -92,7 +80,7 @@ export class ResourceService {
       );
       return new RetrieveResourceDto({ id, ...rest });
     } catch (error) {
-      throw new HttpException({ message: error.message || error }, 500);
+      throw new HttpException({ message: error.message || error }, 400);
     }
   }
   async findAll(model: string): Promise<ResourcePopulated> {

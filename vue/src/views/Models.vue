@@ -1,10 +1,17 @@
 <template>
   <div class="d-flex flex-column">
     <v-autocomplete class="mr-2" variant="outlined" :items="models" v-model="model" @update:model-value="onModelUpdate"></v-autocomplete>
-    <div class="d-flex mb-2 ml-auto">
-      <v-btn class="mr-2" color="primary" @click="addEntry">Добавить</v-btn>
-      <v-btn class="mr-2" color="primary" @click="cloneEntry">Клонировать</v-btn>
-      <v-btn color="primary" @click="deleteEntry">Удалить</v-btn>
+    <div class="d-flex mb-2">
+      <div class="mr-auto">
+        <v-card-title class="text-h6 text-md-h5 text-lg-h4">{{ tableHeader }}</v-card-title>
+        <v-card-text> {{ tableDescription }} </v-card-text>
+      </div>
+      <div class="mt-auto mb-2">
+        <v-btn class="mr-2" color="primary" @click="editSchema">schema</v-btn>
+        <v-btn class="mr-2" color="primary" @click="addEntry">Добавить</v-btn>
+        <v-btn class="mr-2" color="primary" @click="cloneEntry">Клонировать</v-btn>
+        <v-btn color="primary" @click="deleteEntry">Удалить</v-btn>
+      </div>
     </div>
   </div>
   <AgGridVue
@@ -21,13 +28,16 @@
     enableCellTextSelection
     :onCellDoubleClicked="onCellDoubleClicked"
     rowMultiSelectWithClick
-    :getMainMenuItems="getMainMenuItems"
   >
   </AgGridVue>
 </template>
 
 <script>
 import { AgGridVue } from 'ag-grid-vue3';
+import { storeToRefs } from 'pinia';
+import { useStore } from '../stores/main';
+const store = useStore();
+const { settings } = storeToRefs(store);
 import ModelCell from '../components/cellRenderers/ModelCell.vue';
 export default {
   name: 'ModelView',
@@ -39,10 +49,12 @@ export default {
     return {
       defaultCsvExportParams: null,
       gridApi: null,
+      columnApi: null,
       defaultColDef: {
         sortable: true,
         flex: 1,
-        filter: true,
+        filter: 'agTextColumnFilter',
+        floatingFilter: true,
       },
       getRowId: function (params) {
         return params.data.id;
@@ -50,60 +62,48 @@ export default {
       relations: [],
       models: [],
       model: null,
+      trigger: 0,
     };
   },
   beforeUnmount() {
     this.$emitter.off('delete-entry');
     this.$emitter.off('new-entry');
     this.$emitter.off('edit-entry');
+    this.$emitter.off('edit-schema');
+  },
+  created() {
+    window.addEventListener('beforeunload', () => {
+      //save column state to store
+      if (this.columnApi) {
+        settings.value.models[this.model] = this.columnApi.getColumnState();
+      }
+    });
+  },
+  computed: {
+    tableHeader() {
+      if (!this.model) return '';
+      this.trigger;
+      const schema = this.$meta.find((c) => c.title == this.model);
+      return schema.alias || schema?.title;
+    },
+    tableDescription() {
+      this.trigger;
+      if (!this.model) return '';
+      const schema = this.$meta.find((c) => c.title == this.model);
+      return schema.description;
+    },
   },
   methods: {
-    getMainMenuItems(params) {
-      // you don't need to switch, we switch below to just demonstrate some different options
-      // you have on how to build up the menu to return
-      // switch (params.column.getId()) {
-      //   // return the defaults, put add some extra items at the end
-      //   case 'athlete':
-      //     const athleteMenuItems = params.defaultItems.slice(0);
-      //     athleteMenuItems.push({
-      //       name: 'AG Grid Is Great',
-      //       action: () => {
-      //         console.log('AG Grid is great was selected');
-      //       },
-      //     });
-      //     athleteMenuItems.push({
-      //       name: 'Casio Watch',
-      //       action: () => {
-      //         console.log('People who wear casio watches are cool');
-      //       },
-      //     });
-      //     return athleteMenuItems;
-      //   default:
-      //     // make no changes, just accept the defaults
-      //     console.log(params.column.getId());
-
-      //     return params.defaultItems;
-      // }
-      const relations = Object.keys(this.relations);
-      if (relations.includes(params.column.getId())) {
-        const relationMenuItems = params.defaultItems.slice(0);
-        relationMenuItems.push({
-          name: 'Добавить',
-          action: () => {
-            this.$emitter.emit('openModal', {
-              url: `/resource/`,
-              method: 'POST',
-              header: 'Добавить',
-              eventName: 'new-entry',
-              model: params.column.getId(),
-              fields: this.relations[params.column.getId()].map((c) => ({ key: c.field, label: c.headerName })).filter((c) => c.key !== 'id' && c.key !== 'action'),
-            });
-          },
-        });
-        return relationMenuItems;
-      } else {
-        return params.defaultItems;
-      }
+    editSchema() {
+      const schema = this.$meta.find((c) => c.title == this.model);
+      if (!schema) return;
+      this.$emitter.emit('openModal', {
+        url: `/configs/meta/`,
+        method: 'PATCH',
+        header: 'Изменить',
+        eventName: 'edit-schema',
+        fields: [{ key: 'schema', value: schema, type: 'json' }],
+      });
     },
     onCellDoubleClicked(cell) {
       //open new window
@@ -118,13 +118,33 @@ export default {
         url: `/resource/`,
         method: 'POST',
         header: 'Добавить',
+        relations: this.relations,
         eventName: 'new-entry',
         model: this.model,
-        fields: this.gridApi
-          .getColumnDefs()
-          .map((c) => ({ key: c.field, label: c.headerName }))
-          .filter((c) => c.key !== 'id' && c.key !== 'action'),
+        fields: this.composeFields(),
       });
+    },
+    composeFields() {
+      const keys = Object.keys(this.relations);
+      return this.gridApi
+        .getColumnDefs()
+        .filter((c) => c.field !== 'id' && c.field !== '_action')
+        .map((c) => {
+          if (keys.includes(c.field)) {
+            return {
+              key: c.field,
+              label: c.field,
+              value: null,
+              relation: true,
+            };
+          } else {
+            return {
+              key: c.field,
+              label: c.field,
+              value: null,
+            };
+          }
+        });
     },
     cloneEntry() {
       const selectedRows = this.gridApi.getSelectedRows();
@@ -158,22 +178,44 @@ export default {
         id: ids,
       });
     },
+    // onDisplayedColumnsChanged(a) {
+    //   if (this.columnApi) {
+    //     //save to store
+    //     console.log('saved', a);
+    //     settings.value.models[this.model] = this.columnApi.getColumnState();
+    //   }
+    // },
     onModelUpdate() {
       return new Promise((resolve) => {
         this.$http({ method: 'GET', url: `/v1/resource?model=${this.model}` }).then((res) => {
-          const columns = res.data.entities.length
-            ? Object.keys(res.data.entities[0]).map((key) => ({
-                field: key,
-                headerName: key,
-                valueFormatter: this.baseFormatter,
-              }))
-            : [];
+          //save last model
+          settings.value.lastModel = this.model;
+          const columns = [];
+          //apply formatters only to those field which are relations
+          const keys = Object.keys(res.data.relations);
+          if (res.data.entities.length) {
+            const columnKeys = Object.keys(res.data.entities[0]);
+            for (const key of columnKeys) {
+              if (keys.includes(key)) {
+                columns.push({
+                  field: key,
+                  headerName: key,
+                  valueFormatter: this.baseFormatter,
+                });
+              } else {
+                columns.push({
+                  field: key,
+                  headerName: key,
+                });
+              }
+            }
+          }
 
           if (columns.length) {
             columns[0].headerCheckboxSelection = true;
             columns[0].checkboxSelection = true;
             columns.push({
-              field: 'action',
+              field: '_action',
               headerName: '',
               cellRenderer: 'ModelCell',
               filter: false,
@@ -189,6 +231,10 @@ export default {
           this.gridApi.setColumnDefs(columns);
           this.gridApi.setRowData(res.data.entities);
           this.gridApi.redrawRows();
+          //load column state from store
+          if (settings.value.models[this.model]) {
+            this.columnApi.applyColumnState({ state: settings.value.models[this.model] });
+          }
           resolve();
         });
       });
@@ -196,12 +242,12 @@ export default {
     baseFormatter(params) {
       //check if custom formatting exists
       const relationName = this.relations[params.colDef.field]?.table_name;
-
-      if (relationName && this.$meta[relationName]?.formatter) {
+      const schema = this.$meta.find((c) => c.title == relationName);
+      if (relationName && schema?.formatter.length) {
         let formatted = '';
         const related = this.relations[params.colDef.field].entities.find((c) => c.id == params.value);
         if (related) {
-          for (const key of this.$meta[relationName].formatter) {
+          for (const key of schema.formatter) {
             formatted += `${related[key]} `;
           }
         }
@@ -211,19 +257,23 @@ export default {
     },
     onGridReady(params) {
       this.gridApi = params.api;
-      this.$http({ method: 'GET', url: `/v1/resource/models` }).then((res) => {
+      this.columnApi = params.columnApi;
+      this.$http({ method: 'GET', url: `/v1/resource/models` }).then(async (res) => {
         this.models = res.data;
         if (this.$route.query.relation) {
           this.model = this.$route.query.relation;
-          this.onModelUpdate().then(() => {
-            if (this.$route.query.id) {
-              this.gridApi.forEachNode((node) => {
-                if (node.data.id == this.$route.query.id) {
-                  node.setSelected(true);
-                }
-              });
-            }
-          });
+          await this.onModelUpdate();
+          if (this.$route.query.id) {
+            this.gridApi.forEachNode((node) => {
+              if (node.data.id == this.$route.query.id) {
+                node.setSelected(true);
+              }
+            });
+          }
+        } else {
+          //load lastmodel from store
+          this.model = settings.value.lastModel;
+          await this.onModelUpdate();
         }
       });
       this.$emitter.on('delete-entry', (ids) => {
@@ -243,6 +293,12 @@ export default {
       });
       this.$emitter.on('new-entry', (evt) => {
         setTimeout(() => this.gridApi.applyTransaction({ add: [evt] }), 0);
+      });
+      this.$emitter.on('edit-schema', (evt) => {
+        //rewrite schema
+        const schemaIndex = this.$meta.findIndex((c) => c.title == evt.schema.title);
+        this.$meta.splice(schemaIndex, 1, evt.schema);
+        this.trigger++;
       });
       this.$emitter.on('edit-entry', (evt) => {
         const rowNode = this.gridApi.getRowNode(evt.id);
