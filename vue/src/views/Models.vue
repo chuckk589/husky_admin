@@ -55,6 +55,8 @@ export default {
         flex: 1,
         filter: 'agTextColumnFilter',
         floatingFilter: true,
+
+        resizable: true,
       },
       getRowId: function (params) {
         return params.data.id;
@@ -233,7 +235,7 @@ export default {
           this.gridApi.redrawRows();
           //load column state from store
           if (settings.value.models[this.model]) {
-            this.columnApi.applyColumnState({ state: settings.value.models[this.model] });
+            this.columnApi.applyColumnState({ state: settings.value.models[this.model], applyOrder: true });
           }
           resolve();
         });
