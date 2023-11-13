@@ -99,7 +99,7 @@ export default {
     this.$emitter.on('openModal', (evt) => {
       this.show = true;
       this.payload = evt;
-      this.model = this.payload.hidden.find((field) => field.key == '_model').value;
+      this.model = this.payload?.hidden?.find((field) => field.key == '_model')?.value;
     });
   },
   beforeUnmount() {
@@ -180,12 +180,13 @@ export default {
       }
     },
     makeData() {
-      const data = this.payload.hidden?.reduce((s, c) => {
-        if (c.key) {
-          s[c.key] = c.value;
-        }
-        return s;
-      }, {});
+      const data =
+        this.payload.hidden?.reduce((s, c) => {
+          if (c.key) {
+            s[c.key] = c.value;
+          }
+          return s;
+        }, {}) || {};
       for (const field of this.payload.fields) {
         const type = this.$meta[this.model]?.properties[field.key]?.type || field.type;
         if (type == 'boolean') {
@@ -196,7 +197,7 @@ export default {
           if (field.value == '') {
             data[field.key] = null;
           } else {
-            data[field.key] = field.value;
+            data[field.key] = field?.value;
           }
         }
       }
