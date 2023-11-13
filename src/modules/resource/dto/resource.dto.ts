@@ -2,7 +2,7 @@ import { IsString } from 'class-validator';
 
 export class ResourceDto {
   @IsString()
-  model!: string;
+  _model!: string;
 
   [key: string]: any;
 }
@@ -17,16 +17,16 @@ export class ResourcePopulated {
 }
 export class CloneResourceDto {
   @IsString()
-  model!: string;
+  _model!: string;
 
-  entities: Omit<ResourceDto, 'model'>[];
+  entities: Omit<ResourceDto, '_model'>[];
 }
 
 export class RetrieveResourceDto {
   constructor(object: any) {
     for (const key in object) {
-      this[key] = typeof object[key] === 'object' ? JSON.stringify(object[key]) : object[key].toString();
+      this[key] = typeof object[key] === 'object' && object[key] != null ? JSON.stringify(object[key]) : object[key];
     }
   }
-  [key: string]: string;
+  [key: string]: any;
 }

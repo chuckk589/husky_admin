@@ -1,31 +1,32 @@
+import { RetrieveSchemaDto } from './dto/retrieve-schema.dto';
 import { RetrieveConfigDto } from './dto/retrieve-config.dto';
 import { EntityManager } from '@mikro-orm/core';
 import { HttpException, Injectable } from '@nestjs/common';
 import { Config } from '../mikroorm/entities/Config';
 import fs from 'fs';
 import { UpdateConfigDto } from './dto/update-config.dto';
-import { Schema, UpdateMetaDto } from './dto/update-meta.dto';
+import { UpdateMetaDto } from './dto/update-meta.dto';
 
 @Injectable()
 export class ConfigsService {
   constructor(private readonly em: EntityManager) {}
 
-  async updateMeta(updateMetaDto: UpdateMetaDto) {
-    const schema: Schema[] = JSON.parse(fs.readFileSync('./dist/public/schema.json', 'utf8'));
-    const schemas = Array.isArray(updateMetaDto.schema) ? updateMetaDto.schema : [updateMetaDto.schema];
-    for (const update of schemas) {
-      const index = schema.findIndex((item) => item.title === update.title);
-      if (index !== -1) {
-        schema[index] = update;
-      } else {
-        throw new HttpException({ message: 'Schema not found' }, 404);
-      }
+  async updateMeta(updateMetaDto: UpdateMetaDto): Promise<RetrieveSchemaDto> {
+    const schema: { [key: string]: RetrieveSchemaDto } = JSON.parse(fs.readFileSync('./dist/public/schema.json', 'utf8'));
+    if (!schema[updateMetaDto._model]) throw new HttpException({ message: 'Schema doesnt exist' }, 404);
+    //update schema
+    schema[updateMetaDto._model].alias = updateMetaDto.schema.alias;
+    schema[updateMetaDto._model].description = updateMetaDto.schema.description;
+    schema[updateMetaDto._model].formatter = updateMetaDto.schema.formatter;
+
+    for (const prop in schema[updateMetaDto._model].properties) {
+      schema[updateMetaDto._model].properties[prop].comment = updateMetaDto.schema.properties[prop].comment;
     }
     fs.writeFileSync('./dist/public/schema.json', JSON.stringify(schema));
-    return updateMetaDto;
+    return updateMetaDto.schema;
   }
 
-  async findMeta() {
+  findMeta(): { [key: string]: RetrieveSchemaDto } {
     return JSON.parse(fs.readFileSync('./dist/public/schema.json', 'utf8'));
   }
 

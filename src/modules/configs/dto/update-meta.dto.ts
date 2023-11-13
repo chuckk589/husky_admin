@@ -1,34 +1,13 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsInstance, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsDefined, IsInstance, IsObject, IsOptional, IsString, ValidateNested, validate } from 'class-validator';
+import { RetrieveSchemaDto } from './retrieve-schema.dto';
 
 export class UpdateMetaDto {
-  @IsObject()
+  @IsDefined()
   @ValidateNested()
-  @Type(() => Schema)
-  schema: Schema | Schema[];
-}
-export class Schema {
-  @IsString()
-  title: string;
+  @Type(() => RetrieveSchemaDto)
+  schema: RetrieveSchemaDto;
 
   @IsString()
-  alias: string;
-
-  @IsString()
-  description: string;
-
-  @IsString({ each: true, always: false })
-  required: string[];
-
-  @IsString({ each: true, always: false })
-  @IsOptional()
-  formatter: string[];
-
-  @IsObject()
-  properties: {
-    [key: string]: {
-      type: string;
-      comment?: string;
-    };
-  };
+  _model: string;
 }

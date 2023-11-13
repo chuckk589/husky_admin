@@ -17,9 +17,9 @@ export default {
         method: 'PATCH',
         header: `${this.params.model} ${this.params.data.id}`,
         eventName: 'edit-entry',
-        model: this.params.model,
         relations: this.params.relations,
         fields: this.composeFields(),
+        hidden: [{ key: '_model', value: this.params.model }],
       });
     },
     composeFields() {

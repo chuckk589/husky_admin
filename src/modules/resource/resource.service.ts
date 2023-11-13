@@ -12,16 +12,16 @@ export class ResourceService {
   async clone(cloneResourceDto: CloneResourceDto) {
     try {
       //no validation for now
-      const { model, ...rest } = cloneResourceDto;
+      const { _model, ...rest } = cloneResourceDto;
 
       //insert all entities
       let query = '';
       for (const entity of rest.entities) {
         const { id, ...clean } = entity;
-        query += `INSERT INTO ${model} (${Object.keys(clean)
+        query += `INSERT INTO ${_model} (${Object.keys(clean)
           .map((key) => `"${key}"`)
           .join(',')}) VALUES (${Object.keys(clean)
-          .map((key) => `'${clean[key]}'`)
+          .map((key) => ([null, ''].includes(clean[key]) ? `NULL` : `'${clean[key]}'`))
           .join(',')}) RETURNING *;`;
       }
       let res = await this.db.client.query(query);
@@ -35,8 +35,37 @@ export class ResourceService {
   }
   async findModels() {
     try {
-      const models = await this.db.client.query(`SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'`);
-      return models.rows.map((row: any) => row.table_name);
+      // const models = await this.db.client.query(`SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'`);
+      // return models.rows.map((row: any) => row.table_name);
+      return [
+        'achievments',
+        'actions',
+        'buffs',
+        'characters',
+        'character_duplicate_fines',
+        'character_levels',
+        'character_perks',
+        'characters_requirements',
+        'constants',
+        'consumables',
+        'dialogs',
+        'floors',
+        'furnitures',
+        'groups_tiles',
+        'loot_boxes',
+        'loot_box_group_chances',
+        'loot_box_items',
+        'loot_boxes_price',
+        'max_by_group_tiles',
+        'character_puzzle_chances',
+        'furniture_puzzle_chances',
+        'raid_cells',
+        'raid_count_items',
+        'raid_locations',
+        'things',
+        'unique_action_relations',
+        'unique_actions_chains',
+      ];
     } catch (error) {
       throw new HttpException({ message: error.message || error }, 400);
     }
@@ -44,7 +73,7 @@ export class ResourceService {
 
   async remove(ids: number[], removeResourceDto: ResourceDto) {
     try {
-      await this.db.client.query(`DELETE FROM ${removeResourceDto.model} WHERE id IN (${ids.join(',')})`);
+      await this.db.client.query(`DELETE FROM ${removeResourceDto._model} WHERE id IN (${ids.join(',')})`);
       return ids;
     } catch (error) {
       throw new HttpException({ message: error.message || error }, 400);
@@ -52,16 +81,20 @@ export class ResourceService {
   }
   async create(createResourceDto: ResourceDto) {
     try {
-      this.ajv.validate(createResourceDto.model, createResourceDto);
-      const { model, ...rest } = createResourceDto;
+      const { _model, ...rest } = createResourceDto;
 
-      const res = await this.db.client.query(
-        `INSERT INTO ${model} (${Object.keys(rest)
+      this.ajv.validate(createResourceDto._model, createResourceDto);
+      const query =
+        `INSERT INTO ${_model} ` +
+        `(${Object.keys(rest)
           .map((key) => `"${key}"`)
           .join(',')}) VALUES (${Object.keys(rest)
-          .map((key) => `'${rest[key]}'`)
-          .join(',')}) RETURNING id`,
-      );
+          .map((key) => ([null, ''].includes(rest[key]) ? `NULL` : `'${rest[key]}'`))
+          .join(',')}) RETURNING *`;
+      // console.log(query);
+
+      const res = await this.db.client.query(query);
+
       return new RetrieveResourceDto({ id: res.rows[0].id, ...rest });
     } catch (error) {
       throw new HttpException({ message: error.message || error }, 400);
@@ -69,15 +102,20 @@ export class ResourceService {
   }
   async update(id: number, updateResourceDto: ResourceDto) {
     try {
-      this.ajv.validate(updateResourceDto.model, updateResourceDto, true);
+      const { _model, ...rest } = updateResourceDto;
 
-      const { model, ...rest } = updateResourceDto;
+      this.ajv.validate(updateResourceDto._model, updateResourceDto);
 
-      await this.db.client.query(
-        `UPDATE ${model} SET ${Object.keys(rest)
-          .map((key) => `"${key}"='${rest[key]}'`)
-          .join(',')} WHERE id=${id}`,
-      );
+      const query =
+        `UPDATE ${_model} SET ` +
+        Object.keys(rest)
+          .map((key) => ([null, ''].includes(rest[key]) ? `"${key}"=NULL` : `"${key}"='${rest[key]}'`))
+          .join(',') +
+        ` WHERE id=${id}`;
+      // console.log(query);
+
+      await this.db.client.query(query);
+
       return new RetrieveResourceDto({ id, ...rest });
     } catch (error) {
       throw new HttpException({ message: error.message || error }, 400);

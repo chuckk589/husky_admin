@@ -1,6 +1,6 @@
 import { UpdateMetaDto } from './dto/update-meta.dto';
 import { UpdateConfigDto } from './dto/update-config.dto';
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ConfigsService } from './configs.service';
 
 @Controller({

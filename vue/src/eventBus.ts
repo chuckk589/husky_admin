@@ -20,6 +20,7 @@ type Events = {
     footer: string;
     eventName: string;
     noSave: boolean;
+    hidden: { key: string; value: string }[];
     fields: {
       type: string;
       label: string;

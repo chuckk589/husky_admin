@@ -1,20 +1,24 @@
-[
-  {
+{
+  "achievments": {
     "title": "achievments",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "type": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "description": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "award_key": {
         "type": "string",
@@ -25,7 +29,8 @@
         "comment": "Название получаемой награды"
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "actions": {
         "type": [
@@ -35,33 +40,29 @@
         "comment": "Массив из объектов действий необходимых для получения ачивки"
       }
     },
-    "required": [
-      "type",
-      "name",
-      "description",
-      "award_key",
-      "award_name",
-      "icon",
-      "actions"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
+  "actions": {
     "title": "actions",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "group": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "animation_id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "rules": {
         "type": [
@@ -71,203 +72,203 @@
         "comment": "Правила для выполнения действий, тут указываются ключи, вся логика в коде прописывается"
       },
       "min_time": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "max_time": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "unique": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       },
       "condition_ids": {
         "type": [
           "object",
           "string"
-        ]
+        ],
+        "comment": ""
       }
     },
-    "required": [
-      "name",
-      "group",
-      "animation_id",
-      "rules",
-      "min_time",
-      "max_time",
-      "unique",
-      "condition_ids"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
+  "buffs": {
     "title": "buffs",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "group": {
-        "type": "number",
+        "type": "int32",
         "comment": "У одной группы не может быть бафф и дебафф одновременно!!"
       },
       "type": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "positive": {
         "type": "boolean",
         "comment": "Является ли бонус положительным"
       },
       "multiply": {
-        "type": "number",
+        "type": "int32",
         "comment": "множитель бонуса в процентах"
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "description": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "metadata": {
         "type": "string",
         "comment": "конкретизация на что бонус, используется не везде, и для каждого случая свое значение"
       }
     },
-    "required": [
-      "group",
-      "type",
-      "positive",
-      "multiply",
-      "name",
-      "icon",
-      "description",
-      "metadata"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
+  "character_duplicate_fines": {
     "title": "character_duplicate_fines",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "count_duplicates": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "fine_percent": {
-        "type": "number"
+        "type": "float32",
+        "comment": ""
       }
     },
-    "required": [
-      "count_duplicates",
-      "fine_percent"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
+  "character_levels": {
     "title": "character_levels",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "level": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "from_exp": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "price": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "efficiency_for_level": {
-        "type": "number"
+        "type": "float32",
+        "comment": ""
       }
     },
-    "required": [
-      "level",
-      "from_exp",
-      "price",
-      "efficiency_for_level"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
+  "character_perks": {
     "title": "character_perks",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "icon": {
-        "type": "string"
-      },
-      "type": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "value": {
-        "type": "number",
+        "type": "float32",
         "comment": "Указывается в зависимости от перка, нужен не везде"
       }
     },
-    "required": [
-      "name",
-      "icon",
-      "value"
-    ],
+    "optionalProperties": {
+      "type": {
+        "type": "string",
+        "comment": ""
+      }
+    },
     "formatter": []
   },
-  {
+  "character_puzzle_chances": {
     "title": "character_puzzle_chances",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "chance": {
-        "type": "number"
-      },
-      "character_id": {
-        "type": "number"
+        "type": "float32",
+        "comment": ""
       }
     },
-    "required": [
-      "chance"
-    ],
+    "optionalProperties": {
+      "character_id": {
+        "type": "int32",
+        "comment": ""
+      }
+    },
     "formatter": []
   },
-  {
+  "characters": {
     "title": "characters",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "template_name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "group": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "promo_image": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "avatar": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "model": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "actions": {
         "type": [
@@ -280,7 +281,8 @@
         "type": [
           "object",
           "string"
-        ]
+        ],
+        "comment": ""
       },
       "things": {
         "type": [
@@ -293,1141 +295,455 @@
         "type": [
           "object",
           "string"
-        ]
+        ],
+        "comment": ""
       },
       "can_be_starter": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       }
     },
-    "required": [
-      "template_name",
-      "group",
-      "promo_image",
-      "avatar",
-      "model",
-      "actions",
-      "friends",
-      "things",
-      "perks",
-      "can_be_starter"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
+  "characters_requirements": {
     "title": "characters_requirements",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "book_row": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "furniture_id": {
-        "type": "number",
+        "type": "int32",
         "comment": "Если group = -1"
       },
       "furniture_group": {
-        "type": "number",
+        "type": "int32",
         "comment": "Если id = -1"
-      },
-      "character_id": {
-        "type": "number"
       }
     },
-    "required": [
-      "book_row",
-      "furniture_id",
-      "furniture_group"
-    ],
+    "optionalProperties": {
+      "character_id": {
+        "type": "int32",
+        "comment": ""
+      }
+    },
     "formatter": []
   },
-  {
+  "constants": {
     "title": "constants",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "key": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "type": {
-        "type": "string"
-      },
+        "type": "string",
+        "comment": ""
+      }
+    },
+    "optionalProperties": {
       "num_value": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "str_value": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "flt_value": {
-        "type": "number"
+        "type": "float32",
+        "comment": ""
       },
       "arr_value": {
         "type": [
           "object",
           "string"
-        ]
+        ],
+        "comment": ""
       }
     },
-    "required": [
-      "key",
-      "type"
-    ],
     "formatter": []
   },
-  {
+  "consumables": {
     "title": "consumables",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "group": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "description": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "use_type": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "max_count": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "use_count": {
-        "type": "number"
-      },
-      "buff_id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "value": {
-        "type": "number"
+        "type": "float32",
+        "comment": ""
       },
       "only_characters": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       }
     },
-    "required": [
-      "group",
-      "name",
-      "icon",
-      "description",
-      "use_type",
-      "max_count",
-      "use_count",
-      "value",
-      "only_characters"
-    ],
+    "optionalProperties": {
+      "buff_id": {
+        "type": "int32",
+        "comment": ""
+      }
+    },
     "formatter": []
   },
-  {
+  "dialogs": {
     "title": "dialogs",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "messages": {
         "type": [
           "object",
           "string"
-        ]
+        ],
+        "comment": ""
       }
     },
-    "required": [
-      "messages"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
-    "title": "en_lang",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "key": {
-        "type": "string"
-      },
-      "type": {
-        "type": "string"
-      },
-      "text": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "key",
-      "type",
-      "text"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "es_lang",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "key": {
-        "type": "string"
-      },
-      "type": {
-        "type": "string"
-      },
-      "text": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "key",
-      "type",
-      "text"
-    ],
-    "formatter": []
-  },
-  {
+  "floors": {
     "title": "floors",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       }
     },
-    "required": [],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
+  "furniture_puzzle_chances": {
     "title": "furniture_puzzle_chances",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "chance": {
-        "type": "number"
-      },
-      "furniture_id": {
-        "type": "number"
+        "type": "float32",
+        "comment": ""
       }
     },
-    "required": [
-      "chance"
-    ],
+    "optionalProperties": {
+      "furniture_id": {
+        "type": "int32",
+        "comment": ""
+      }
+    },
     "formatter": []
   },
-  {
+  "furnitures": {
     "title": "furnitures",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "category": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "description": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "promo_image": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "model": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "occupy": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       },
       "is_wall_object": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       },
       "rules": {
         "type": [
           "object",
           "string"
-        ]
+        ],
+        "comment": ""
       },
       "prestige": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "optimal_requirement": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "max_requirement": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "size": {
         "type": [
           "object",
           "string"
-        ]
+        ],
+        "comment": ""
       }
     },
-    "required": [
-      "name",
-      "category",
-      "description",
-      "promo_image",
-      "icon",
-      "model",
-      "occupy",
-      "is_wall_object",
-      "rules",
-      "prestige",
-      "optimal_requirement",
-      "max_requirement",
-      "size"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
+  "groups_tiles": {
     "title": "groups_tiles",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "size": {
         "type": [
           "object",
           "string"
-        ]
+        ],
+        "comment": ""
       },
       "position": {
         "type": [
           "object",
           "string"
-        ]
+        ],
+        "comment": ""
       },
       "cost": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "previous": {
         "type": [
           "object",
           "string"
-        ]
+        ],
+        "comment": ""
       },
       "sector": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "is_start": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       }
     },
-    "required": [
-      "size",
-      "position",
-      "cost",
-      "previous",
-      "sector",
-      "is_start"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
-    "title": "letters",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "is_everyone": {
-        "type": "boolean"
-      },
-      "subject": {
-        "type": "string"
-      },
-      "message": {
-        "type": "string"
-      },
-      "items": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "time": {
-        "type": "number"
-      },
-      "senderId": {
-        "type": "number"
-      },
-      "recipientId": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "is_everyone",
-      "subject",
-      "message",
-      "time"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_character_actions",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "character_id": {
-        "type": "number"
-      },
-      "action_config_id": {
-        "type": "number"
-      },
-      "time_end": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "character_id",
-      "action_config_id",
-      "time_end"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_character_buffs",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "action_name": {
-        "type": "string"
-      },
-      "config_id": {
-        "type": "number"
-      },
-      "buff_time": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "action_name",
-      "config_id",
-      "buff_time"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_character_interactions",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "character_id": {
-        "type": "number"
-      },
-      "action_name": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "character_id",
-      "action_name"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_character_raids",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "location_config_id": {
-        "type": "number"
-      },
-      "minutes": {
-        "type": "number"
-      },
-      "start_time": {
-        "type": "number"
-      },
-      "end_time": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "location_config_id",
-      "minutes",
-      "start_time",
-      "end_time"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_furniture_interactions",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "furniture_id": {
-        "type": "number"
-      },
-      "action": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "furniture_id",
-      "action"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_group_tiles",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "config_id": {
-        "type": "number"
-      },
-      "floor_id": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "config_id",
-      "floor_id"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_inventory_consumables",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "consumable_config_id": {
-        "type": "number"
-      },
-      "count": {
-        "type": "number"
-      },
-      "action_name": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "consumable_config_id",
-      "count",
-      "action_name"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_inventory_things",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "thing_id": {
-        "type": "number"
-      },
-      "thing_config_id": {
-        "type": "number"
-      },
-      "action_name": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "thing_id",
-      "thing_config_id",
-      "action_name"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_loot_box_creations",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "type": {
-        "type": "string"
-      },
-      "loot_box_id": {
-        "type": "number"
-      },
-      "location_config_id": {
-        "type": "number"
-      },
-      "items": {
-        "type": [
-          "object",
-          "string"
-        ]
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "type",
-      "loot_box_id",
-      "location_config_id",
-      "items"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_loot_box_opens",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "type": {
-        "type": "string"
-      },
-      "loot_box_id": {
-        "type": "number"
-      },
-      "loot_box_config_id": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "type",
-      "loot_box_id",
-      "loot_box_config_id"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_player_gates",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "action": {
-        "type": "string"
-      },
-      "ip": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "action"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_server",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "type": {
-        "type": "string"
-      },
-      "data": {
-        "type": "string"
-      },
-      "time": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "type",
-      "data",
-      "time"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_soft_currency",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "action_name": {
-        "type": "string"
-      },
-      "is_addition": {
-        "type": "boolean"
-      },
-      "amount": {
-        "type": "number"
-      },
-      "balance": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "action_name",
-      "is_addition",
-      "amount",
-      "balance"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_user_achievments",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "achievment_config_id": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "achievment_config_id"
-    ],
-    "formatter": []
-  },
-  {
+  "loot_box_group_chances": {
     "title": "loot_box_group_chances",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "group_name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "chance": {
-        "type": "number"
-      },
-      "loot_box_id": {
-        "type": "number"
+        "type": "float32",
+        "comment": ""
       }
     },
-    "required": [
-      "group_name",
-      "chance"
-    ],
+    "optionalProperties": {
+      "loot_box_id": {
+        "type": "int32",
+        "comment": ""
+      }
+    },
     "formatter": []
   },
-  {
+  "loot_box_items": {
     "title": "loot_box_items",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "group_name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "config_id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "chance": {
-        "type": "number"
+        "type": "float32",
+        "comment": ""
       },
       "count": {
-        "type": "number"
-      },
-      "loot_box_id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       }
     },
-    "required": [
-      "group_name",
-      "config_id",
-      "chance",
-      "count"
-    ],
+    "optionalProperties": {
+      "loot_box_id": {
+        "type": "int32",
+        "comment": ""
+      }
+    },
     "formatter": []
   },
-  {
+  "loot_boxes": {
     "title": "loot_boxes",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "type": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "min_items": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "max_items": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       }
     },
-    "required": [
-      "type",
-      "name",
-      "icon",
-      "min_items",
-      "max_items"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
+  "loot_boxes_price": {
     "title": "loot_boxes_price",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "bought_count": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "price": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       }
     },
-    "required": [
-      "bought_count",
-      "price"
-    ],
+    "optionalProperties": {},
     "formatter": []
   },
-  {
+  "max_by_group_tiles": {
     "title": "max_by_group_tiles",
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "count_group_tiles": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "max_prestige": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "max_soft_currency": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       },
       "max_friends": {
-        "type": "number"
+        "type": "int32",
+        "comment": ""
       }
     },
-    "required": [
-      "count_group_tiles",
-      "max_prestige",
-      "max_soft_currency",
-      "max_friends"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "player_chains_progress",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "chainId": {
-        "type": "number"
-      },
-      "actionId": {
-        "type": "number"
-      }
-    },
-    "required": [],
-    "formatter": []
-  },
-  {
-    "title": "player_characters",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "exp": {
-        "type": "number"
-      },
-      "dirty": {
-        "type": "boolean"
-      },
-      "sector": {
-        "type": "number"
-      },
-      "last_tick": {
-        "type": "number"
-      },
-      "efficiency": {
-        "type": "number"
-      },
-      "buffs": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "position": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "things": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "raid": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "action": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "placed": {
-        "type": "boolean"
-      },
-      "nft_key": {
-        "type": "string"
-      },
-      "playerId": {
-        "type": "number"
-      },
-      "configId": {
-        "type": "number"
-      },
-      "level": {
-        "type": "number"
-      },
-      "satisfaction": {
-        "type": [
-          "object",
-          "string"
-        ]
-      }
-    },
-    "required": [
-      "exp",
-      "dirty",
-      "sector",
-      "last_tick",
-      "efficiency",
-      "buffs",
-      "position",
-      "things",
-      "action",
-      "placed",
-      "nft_key",
-      "level",
-      "satisfaction"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "player_consumables",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "count": {
-        "type": "number"
-      },
-      "playerId": {
-        "type": "number"
-      },
-      "configId": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "count"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "player_floors",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "soft_currency": {
-        "type": "number"
-      },
-      "playerId": {
-        "type": "number"
-      },
-      "configId": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "soft_currency"
-    ],
+    "optionalProperties": {},
     "formatter": []
   }
-]
+}

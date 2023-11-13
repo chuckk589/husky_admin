@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column">
-    <v-autocomplete class="mr-2" variant="outlined" :items="models" v-model="model" @update:model-value="onModelUpdate"></v-autocomplete>
+    <v-autocomplete class="mr-2" variant="outlined" :items="models" :model-value="model" @update:model-value="onModelUpdate"></v-autocomplete>
     <div class="d-flex mb-2">
       <div class="mr-auto">
         <v-card-title class="text-h6 text-md-h5 text-lg-h4">{{ tableHeader }}</v-card-title>
@@ -75,36 +75,32 @@ export default {
   },
   created() {
     window.addEventListener('beforeunload', () => {
-      //save column state to store
-      if (this.columnApi) {
-        settings.value.models[this.model] = this.columnApi.getColumnState();
-      }
+      this.saveColumnState();
     });
   },
   computed: {
     tableHeader() {
       if (!this.model) return '';
       this.trigger;
-      const schema = this.$meta.find((c) => c.title == this.model);
-      return schema.alias || schema?.title;
+      return this.$meta[this.model].alias || this.model;
     },
     tableDescription() {
       this.trigger;
       if (!this.model) return '';
-      const schema = this.$meta.find((c) => c.title == this.model);
-      return schema.description;
+      return this.$meta[this.model].description;
     },
   },
   methods: {
     editSchema() {
-      const schema = this.$meta.find((c) => c.title == this.model);
+      const schema = this.$meta[this.model];
       if (!schema) return;
       this.$emitter.emit('openModal', {
         url: `/configs/meta/`,
         method: 'PATCH',
         header: 'Изменить',
         eventName: 'edit-schema',
-        fields: [{ key: 'schema', value: schema, type: 'json' }],
+        fields: [{ key: 'schema', value: schema, type: 'schema' }],
+        hidden: [{ key: '_model', value: this.model }],
       });
     },
     onCellDoubleClicked(cell) {
@@ -122,31 +118,19 @@ export default {
         header: 'Добавить',
         relations: this.relations,
         eventName: 'new-entry',
-        model: this.model,
+        hidden: [{ key: '_model', value: this.model }],
         fields: this.composeFields(),
       });
     },
     composeFields() {
-      const keys = Object.keys(this.relations);
       return this.gridApi
         .getColumnDefs()
         .filter((c) => c.field !== 'id' && c.field !== '_action')
-        .map((c) => {
-          if (keys.includes(c.field)) {
-            return {
-              key: c.field,
-              label: c.field,
-              value: null,
-              relation: true,
-            };
-          } else {
-            return {
-              key: c.field,
-              label: c.field,
-              value: null,
-            };
-          }
-        });
+        .map((c) => ({
+          key: c.field,
+          label: c.field,
+          value: null,
+        }));
     },
     cloneEntry() {
       const selectedRows = this.gridApi.getSelectedRows();
@@ -154,7 +138,7 @@ export default {
       this.$http({
         method: 'POST',
         url: `/v1/resource/clone`,
-        data: { model: this.model, entities: selectedRows },
+        data: { _model: this.model, entities: selectedRows },
       }).then((res) => {
         setTimeout(() => {
           this.gridApi.applyTransaction({
@@ -180,14 +164,16 @@ export default {
         id: ids,
       });
     },
-    // onDisplayedColumnsChanged(a) {
-    //   if (this.columnApi) {
-    //     //save to store
-    //     console.log('saved', a);
-    //     settings.value.models[this.model] = this.columnApi.getColumnState();
-    //   }
-    // },
-    onModelUpdate() {
+    saveColumnState() {
+      if (this.columnApi) {
+        settings.value.models[this.model] = this.columnApi.getColumnState();
+      }
+    },
+    onModelUpdate(newValue) {
+      if (newValue) {
+        this.saveColumnState();
+        this.model = newValue;
+      }
       return new Promise((resolve) => {
         this.$http({ method: 'GET', url: `/v1/resource?model=${this.model}` }).then((res) => {
           //save last model
@@ -244,7 +230,7 @@ export default {
     baseFormatter(params) {
       //check if custom formatting exists
       const relationName = this.relations[params.colDef.field]?.table_name;
-      const schema = this.$meta.find((c) => c.title == relationName);
+      const schema = this.$meta[relationName];
       if (relationName && schema?.formatter.length) {
         let formatted = '';
         const related = this.relations[params.colDef.field].entities.find((c) => c.id == params.value);
@@ -261,7 +247,6 @@ export default {
       this.gridApi = params.api;
       this.columnApi = params.columnApi;
       this.$http({ method: 'GET', url: `/v1/resource/models` }).then(async (res) => {
-        this.models = res.data;
         if (this.$route.query.relation) {
           this.model = this.$route.query.relation;
           await this.onModelUpdate();
@@ -277,12 +262,16 @@ export default {
           this.model = settings.value.lastModel;
           await this.onModelUpdate();
         }
+        this.models = res.data.map((c) => {
+          const model = this.$meta[c];
+          return { title: model?.alias ? `${model.alias} (${c})` : c, value: c };
+        });
       });
       this.$emitter.on('delete-entry', (ids) => {
         this.$http({
           method: 'DELETE',
           url: `/v1/resource?ids=${ids.join(',')}`,
-          data: { model: this.model },
+          data: { _model: this.model },
         }).then((res) => {
           setTimeout(
             () =>
@@ -298,8 +287,7 @@ export default {
       });
       this.$emitter.on('edit-schema', (evt) => {
         //rewrite schema
-        const schemaIndex = this.$meta.findIndex((c) => c.title == evt.schema.title);
-        this.$meta.splice(schemaIndex, 1, evt.schema);
+        this.$meta[this.model] = evt;
         this.trigger++;
       });
       this.$emitter.on('edit-entry', (evt) => {

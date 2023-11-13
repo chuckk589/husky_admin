@@ -1,20 +1,23 @@
-[
-  {
-    "title": "achievments",
+{
+  "achievments": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "type": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "description": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "award_key": {
         "type": "string",
@@ -25,1409 +28,857 @@
         "comment": "Название получаемой награды"
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "actions": {
-        "type": [
-          "object",
-          "string"
-        ],
-        "comment": "Массив из объектов действий необходимых для получения ачивки"
+        "type": "string",
+        "comment": "Массив из объектов действий необходимых для получения ачивки",
+        "format": "json"
       }
     },
-    "required": [
-      "type",
-      "name",
-      "description",
-      "award_key",
-      "award_name",
-      "icon",
-      "actions"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "actions",
+  "actions": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "group": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "animation_id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "rules": {
-        "type": [
-          "object",
-          "string"
-        ],
-        "comment": "Правила для выполнения действий, тут указываются ключи, вся логика в коде прописывается"
+        "type": "string",
+        "comment": "Правила для выполнения действий, тут указываются ключи, вся логика в коде прописывается",
+        "format": "json"
       },
       "min_time": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "max_time": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "unique": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       },
       "condition_ids": {
-        "type": [
-          "object",
-          "string"
-        ]
+        "type": "string",
+        "comment": "",
+        "format": "json"
       }
     },
-    "required": [
-      "name",
-      "group",
-      "animation_id",
-      "rules",
-      "min_time",
-      "max_time",
-      "unique",
-      "condition_ids"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "buffs",
+  "buffs": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "group": {
-        "type": "number",
+        "type": "integer",
         "comment": "У одной группы не может быть бафф и дебафф одновременно!!"
       },
       "type": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "positive": {
         "type": "boolean",
         "comment": "Является ли бонус положительным"
       },
       "multiply": {
-        "type": "number",
+        "type": "integer",
         "comment": "множитель бонуса в процентах"
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "description": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "metadata": {
         "type": "string",
         "comment": "конкретизация на что бонус, используется не везде, и для каждого случая свое значение"
       }
     },
-    "required": [
-      "group",
-      "type",
-      "positive",
-      "multiply",
-      "name",
-      "icon",
-      "description",
-      "metadata"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "character_duplicate_fines",
+  "character_duplicate_fines": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "count_duplicates": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "fine_percent": {
-        "type": "number"
+        "type": "number",
+        "comment": ""
       }
     },
-    "required": [
-      "count_duplicates",
-      "fine_percent"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "character_levels",
+  "character_levels": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "level": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "from_exp": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "price": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "efficiency_for_level": {
-        "type": "number"
+        "type": "number",
+        "comment": ""
       }
     },
-    "required": [
-      "level",
-      "from_exp",
-      "price",
-      "efficiency_for_level"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "character_perks",
+  "character_perks": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "type": {
-        "type": "string"
+        "type": "string",
+        "comment": "",
+        "nullable": true
       },
       "value": {
         "type": "number",
         "comment": "Указывается в зависимости от перка, нужен не везде"
       }
     },
-    "required": [
-      "name",
-      "icon",
-      "value"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "character_puzzle_chances",
+  "character_puzzle_chances": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "chance": {
-        "type": "number"
+        "type": "number",
+        "comment": ""
       },
       "character_id": {
-        "type": "number"
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "characters"
       }
     },
-    "required": [
-      "chance"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "characters",
+  "characters": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "template_name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "group": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "promo_image": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "avatar": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "model": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "actions": {
-        "type": [
-          "object",
-          "string"
-        ],
-        "comment": "Доступные персонажу действия"
+        "type": "string",
+        "comment": "Доступные персонажу действия",
+        "format": "json"
       },
       "friends": {
-        "type": [
-          "object",
-          "string"
-        ]
+        "type": "string",
+        "comment": "",
+        "format": "json"
       },
       "things": {
-        "type": [
-          "object",
-          "string"
-        ],
-        "comment": "Список ид вещей, который у этого персонажа, указывается по очередности уровней"
+        "type": "string",
+        "comment": "Список ид вещей, который у этого персонажа, указывается по очередности уровней",
+        "format": "json"
       },
       "perks": {
-        "type": [
-          "object",
-          "string"
-        ]
+        "type": "string",
+        "comment": "",
+        "format": "json"
       },
       "can_be_starter": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       }
     },
-    "required": [
-      "template_name",
-      "group",
-      "promo_image",
-      "avatar",
-      "model",
-      "actions",
-      "friends",
-      "things",
-      "perks",
-      "can_be_starter"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "characters_requirements",
+  "characters_requirements": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "book_row": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "furniture_id": {
-        "type": "number",
+        "type": "integer",
         "comment": "Если group = -1"
       },
       "furniture_group": {
-        "type": "number",
+        "type": "integer",
         "comment": "Если id = -1"
       },
       "character_id": {
-        "type": "number"
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "characters"
       }
     },
-    "required": [
-      "book_row",
-      "furniture_id",
-      "furniture_group"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "constants",
+  "constants": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "key": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "type": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "num_value": {
-        "type": "number"
+        "type": "integer",
+        "comment": "",
+        "nullable": true
       },
       "str_value": {
-        "type": "string"
+        "type": "string",
+        "comment": "",
+        "nullable": true
       },
       "flt_value": {
-        "type": "number"
+        "type": "number",
+        "comment": "",
+        "nullable": true
       },
       "arr_value": {
-        "type": [
-          "object",
-          "string"
-        ]
+        "type": "string",
+        "comment": "",
+        "format": "json",
+        "nullable": true
       }
     },
-    "required": [
-      "key",
-      "type"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "consumables",
+  "consumables": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "group": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "description": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "use_type": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "max_count": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "use_count": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "buff_id": {
-        "type": "number"
+        "type": "integer",
+        "comment": "",
+        "nullable": true
       },
       "value": {
-        "type": "number"
+        "type": "number",
+        "comment": ""
       },
       "only_characters": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       }
     },
-    "required": [
-      "group",
-      "name",
-      "icon",
-      "description",
-      "use_type",
-      "max_count",
-      "use_count",
-      "value",
-      "only_characters"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "dialogs",
+  "dialogs": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "messages": {
-        "type": [
-          "object",
-          "string"
-        ]
+        "type": "string",
+        "comment": "",
+        "format": "json"
       }
     },
-    "required": [
-      "messages"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "en_lang",
+  "floors": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
-      "key": {
-        "type": "string"
+      "x-size": {
+        "type": "integer",
+        "comment": ""
       },
-      "type": {
-        "type": "string"
-      },
-      "text": {
-        "type": "string"
+      "y-size": {
+        "type": "integer",
+        "comment": ""
       }
     },
-    "required": [
-      "key",
-      "type",
-      "text"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "es_lang",
+  "furniture_puzzle_chances": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
-      },
-      "key": {
-        "type": "string"
-      },
-      "type": {
-        "type": "string"
-      },
-      "text": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "key",
-      "type",
-      "text"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "floors",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      }
-    },
-    "required": [],
-    "formatter": []
-  },
-  {
-    "title": "furniture_puzzle_chances",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "chance": {
-        "type": "number"
+        "type": "number",
+        "comment": ""
       },
       "furniture_id": {
-        "type": "number"
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "furnitures"
       }
     },
-    "required": [
-      "chance"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "furnitures",
+  "furnitures": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "category": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "description": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "promo_image": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "model": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "occupy": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       },
       "is_wall_object": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       },
       "rules": {
-        "type": [
-          "object",
-          "string"
-        ]
+        "type": "string",
+        "comment": "",
+        "format": "json"
       },
       "prestige": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "optimal_requirement": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "max_requirement": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "size": {
-        "type": [
-          "object",
-          "string"
-        ]
+        "type": "string",
+        "comment": "",
+        "format": "json"
       }
     },
-    "required": [
-      "name",
-      "category",
-      "description",
-      "promo_image",
-      "icon",
-      "model",
-      "occupy",
-      "is_wall_object",
-      "rules",
-      "prestige",
-      "optimal_requirement",
-      "max_requirement",
-      "size"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "groups_tiles",
+  "groups_tiles": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "size": {
-        "type": [
-          "object",
-          "string"
-        ]
+        "type": "string",
+        "comment": "",
+        "format": "json"
       },
       "position": {
-        "type": [
-          "object",
-          "string"
-        ]
+        "type": "string",
+        "comment": "",
+        "format": "json"
       },
       "cost": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "previous": {
-        "type": [
-          "object",
-          "string"
-        ]
+        "type": "string",
+        "comment": "",
+        "format": "json"
       },
       "sector": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "is_start": {
-        "type": "boolean"
+        "type": "boolean",
+        "comment": ""
       }
     },
-    "required": [
-      "size",
-      "position",
-      "cost",
-      "previous",
-      "sector",
-      "is_start"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "letters",
+  "loot_box_group_chances": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
-      },
-      "is_everyone": {
-        "type": "boolean"
-      },
-      "subject": {
-        "type": "string"
-      },
-      "message": {
-        "type": "string"
-      },
-      "items": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "time": {
-        "type": "number"
-      },
-      "senderId": {
-        "type": "number"
-      },
-      "recipientId": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "is_everyone",
-      "subject",
-      "message",
-      "time"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_character_actions",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "character_id": {
-        "type": "number"
-      },
-      "action_config_id": {
-        "type": "number"
-      },
-      "time_end": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "character_id",
-      "action_config_id",
-      "time_end"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_character_buffs",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "action_name": {
-        "type": "string"
-      },
-      "config_id": {
-        "type": "number"
-      },
-      "buff_time": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "action_name",
-      "config_id",
-      "buff_time"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_character_interactions",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "character_id": {
-        "type": "number"
-      },
-      "action_name": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "character_id",
-      "action_name"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_character_raids",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "location_config_id": {
-        "type": "number"
-      },
-      "minutes": {
-        "type": "number"
-      },
-      "start_time": {
-        "type": "number"
-      },
-      "end_time": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "location_config_id",
-      "minutes",
-      "start_time",
-      "end_time"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_furniture_interactions",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "furniture_id": {
-        "type": "number"
-      },
-      "action": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "furniture_id",
-      "action"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_group_tiles",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "config_id": {
-        "type": "number"
-      },
-      "floor_id": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "config_id",
-      "floor_id"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_inventory_consumables",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "consumable_config_id": {
-        "type": "number"
-      },
-      "count": {
-        "type": "number"
-      },
-      "action_name": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "consumable_config_id",
-      "count",
-      "action_name"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_inventory_things",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "thing_id": {
-        "type": "number"
-      },
-      "thing_config_id": {
-        "type": "number"
-      },
-      "action_name": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "thing_id",
-      "thing_config_id",
-      "action_name"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_loot_box_creations",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "type": {
-        "type": "string"
-      },
-      "loot_box_id": {
-        "type": "number"
-      },
-      "location_config_id": {
-        "type": "number"
-      },
-      "items": {
-        "type": [
-          "object",
-          "string"
-        ]
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "type",
-      "loot_box_id",
-      "location_config_id",
-      "items"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_loot_box_opens",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "type": {
-        "type": "string"
-      },
-      "loot_box_id": {
-        "type": "number"
-      },
-      "loot_box_config_id": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "type",
-      "loot_box_id",
-      "loot_box_config_id"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_player_gates",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "action": {
-        "type": "string"
-      },
-      "ip": {
-        "type": "string"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "action"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_server",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "type": {
-        "type": "string"
-      },
-      "data": {
-        "type": "string"
-      },
-      "time": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "type",
-      "data",
-      "time"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_soft_currency",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "action_name": {
-        "type": "string"
-      },
-      "is_addition": {
-        "type": "boolean"
-      },
-      "amount": {
-        "type": "number"
-      },
-      "balance": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "action_name",
-      "is_addition",
-      "amount",
-      "balance"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "logs_user_achievments",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
-      },
-      "player_id": {
-        "type": "number"
-      },
-      "time": {
-        "type": "number"
-      },
-      "achievment_config_id": {
-        "type": "number"
-      }
-    },
-    "required": [
-      "player_id",
-      "time",
-      "achievment_config_id"
-    ],
-    "formatter": []
-  },
-  {
-    "title": "loot_box_group_chances",
-    "alias": "",
-    "description": "",
-    "properties": {
-      "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "group_name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "chance": {
-        "type": "number"
+        "type": "number",
+        "comment": ""
       },
       "loot_box_id": {
-        "type": "number"
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "loot_boxes"
       }
     },
-    "required": [
-      "group_name",
-      "chance"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "loot_box_items",
+  "loot_box_items": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "group_name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "config_id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "chance": {
-        "type": "number"
+        "type": "number",
+        "comment": ""
       },
       "count": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "loot_box_id": {
-        "type": "number"
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "loot_boxes"
       }
     },
-    "required": [
-      "group_name",
-      "config_id",
-      "chance",
-      "count"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "loot_boxes",
+  "loot_boxes": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "type": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "name": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "icon": {
-        "type": "string"
+        "type": "string",
+        "comment": ""
       },
       "min_items": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "max_items": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       }
     },
-    "required": [
-      "type",
-      "name",
-      "icon",
-      "min_items",
-      "max_items"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "loot_boxes_price",
+  "loot_boxes_price": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "bought_count": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "price": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       }
     },
-    "required": [
-      "bought_count",
-      "price"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "max_by_group_tiles",
+  "max_by_group_tiles": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "count_group_tiles": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "max_prestige": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "max_soft_currency": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
       "max_friends": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       }
     },
-    "required": [
-      "count_group_tiles",
-      "max_prestige",
-      "max_soft_currency",
-      "max_friends"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "player_chains_progress",
+  "raid_cells": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
-      "chainId": {
-        "type": "number"
+      "cells_count": {
+        "type": "integer",
+        "comment": ""
       },
-      "actionId": {
-        "type": "number"
+      "prestige": {
+        "type": "integer",
+        "comment": ""
       }
     },
-    "required": [],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "player_characters",
+  "raid_count_items": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
-      "exp": {
-        "type": "number"
+      "min": {
+        "type": "integer",
+        "comment": ""
       },
-      "dirty": {
-        "type": "boolean"
-      },
-      "sector": {
-        "type": "number"
-      },
-      "last_tick": {
-        "type": "number"
-      },
-      "efficiency": {
-        "type": "number"
-      },
-      "buffs": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "position": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "things": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "raid": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "action": {
-        "type": [
-          "object",
-          "string"
-        ]
-      },
-      "placed": {
-        "type": "boolean"
-      },
-      "nft_key": {
-        "type": "string"
-      },
-      "playerId": {
-        "type": "number"
-      },
-      "configId": {
-        "type": "number"
-      },
-      "level": {
-        "type": "number"
-      },
-      "satisfaction": {
-        "type": [
-          "object",
-          "string"
-        ]
+      "max": {
+        "type": "integer",
+        "comment": ""
       }
     },
-    "required": [
-      "exp",
-      "dirty",
-      "sector",
-      "last_tick",
-      "efficiency",
-      "buffs",
-      "position",
-      "things",
-      "action",
-      "placed",
-      "nft_key",
-      "level",
-      "satisfaction"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "player_consumables",
+  "raid_locations": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
-      "count": {
-        "type": "number"
+      "name": {
+        "type": "string",
+        "comment": ""
       },
-      "playerId": {
-        "type": "number"
+      "icon": {
+        "type": "string",
+        "comment": ""
       },
-      "configId": {
-        "type": "number"
+      "loot_box_id": {
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "loot_boxes"
       }
     },
-    "required": [
-      "count"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
   },
-  {
-    "title": "player_floors",
+  "things": {
     "alias": "",
     "description": "",
     "properties": {
       "id": {
-        "type": "number"
+        "type": "integer",
+        "comment": ""
       },
-      "soft_currency": {
-        "type": "number"
+      "group": {
+        "type": "integer",
+        "comment": ""
       },
-      "playerId": {
-        "type": "number"
+      "name": {
+        "type": "string",
+        "comment": ""
       },
-      "configId": {
-        "type": "number"
+      "icon": {
+        "type": "string",
+        "comment": ""
+      },
+      "description": {
+        "type": "string",
+        "comment": ""
       }
     },
-    "required": [
-      "soft_currency"
-    ],
-    "formatter": []
+    "formatter": [],
+    "type": "object"
+  },
+  "unique_action_relations": {
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "integer",
+        "comment": ""
+      },
+      "first_character_id": {
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "characters"
+      },
+      "second_character_id": {
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "characters"
+      },
+      "is_start": {
+        "type": "boolean",
+        "comment": ""
+      },
+      "chain_id": {
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "unique_actions_chains"
+      },
+      "action_id": {
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "actions"
+      },
+      "dialog_id": {
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "dialogs"
+      },
+      "achievment_id": {
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "achievments"
+      },
+      "next_action_id": {
+        "type": "integer",
+        "comment": "",
+        "nullable": true,
+        "ref": "actions"
+      }
+    },
+    "formatter": [],
+    "type": "object"
+  },
+  "unique_actions_chains": {
+    "alias": "",
+    "description": "",
+    "properties": {
+      "id": {
+        "type": "integer",
+        "comment": ""
+      },
+      "name": {
+        "type": "string",
+        "comment": ""
+      }
+    },
+    "formatter": [],
+    "type": "object"
   }
-]
+}

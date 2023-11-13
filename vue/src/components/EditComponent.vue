@@ -20,8 +20,7 @@
       <div>
         <v-card-title>{{ payload.header }}</v-card-title>
         <v-card-text style="min-width: 500px">
-          <template v-for="(field, index) in payload.fields">
-            <v-textarea v-if="field.type == 'textarea'" :key="'t' + index" :label="field.label || field.key" density="comfortable" :hint="field.hint" v-model="field.value" />
+          <!-- <v-textarea v-if="field.type == 'textarea'" :key="'t' + index" :label="field.label || field.key" density="comfortable" :hint="field.hint" v-model="field.value" />
             <v-select v-else-if="field.type == 'select'" :key="'s' + index" :label="field.label || field.key" density="comfortable" v-model="field.value" :hint="field.hint" :items="field.options" />
             <v-text-field v-else-if="field.type == 'date'" type="date" density="comfortable" :key="'d' + index" :label="field.label || field.key" :hint="field.hint" v-model="field.value" />
             <JsonEditor v-else-if="field.type == 'json'" :key="'j' + index" v-model="field.value"></JsonEditor>
@@ -35,8 +34,23 @@
               :append-inner-icon="field.relation ? 'mdi-table-arrow-left' : ''"
               @click:append-inner="field.relation ? relationHandler(field.key, $event) : null"
             >
-            </v-text-field>
-          </template>
+            </v-text-field> -->
+          <component
+            v-for="(field, index) in payload.fields"
+            :is="resolveComponentName(field)"
+            :type="resolveComponentType(field)"
+            :key="index"
+            :hint="resolveComponentHint(field)"
+            persistent-hint
+            density="compact"
+            v-model="field.value"
+            :append-inner-icon="resolveFieldRelation(field) ? 'mdi-table-arrow-left' : ''"
+            @click:append-inner="resolveFieldRelation(field) ? relationHandler(field.key, $event) : null"
+          >
+            <template #label>
+              <span>{{ field.label || field.key }}<strong v-if="resolveRequired(field)" class="text-red">&nbsp;&nbsp;*</strong></span>
+            </template>
+          </component>
         </v-card-text>
         <v-card-actions class="mt-auto">
           <v-btn variant="elevated" v-if="!payload.noSave" class="ml-auto" color="primary" @click="save">Сохранить</v-btn>
@@ -49,10 +63,16 @@
 <script>
 import { AgGridVue } from 'ag-grid-vue3';
 import JsonEditor from './JsonEditor.vue';
+import { VTextField } from 'vuetify/components/VTextField';
+import { VCheckbox } from 'vuetify/components/VCheckbox';
+import { VTextarea } from 'vuetify/components/VTextarea';
 export default {
   components: {
     AgGridVue,
     JsonEditor,
+    VTextField,
+    VCheckbox,
+    VTextarea,
   },
   name: 'EditComponent',
   data() {
@@ -67,6 +87,7 @@ export default {
         filter: 'agTextColumnFilter',
         floatingFilter: true,
       },
+      model: null,
     };
   },
   computed: {
@@ -78,12 +99,50 @@ export default {
     this.$emitter.on('openModal', (evt) => {
       this.show = true;
       this.payload = evt;
+      this.model = this.payload.hidden.find((field) => field.key == '_model').value;
     });
   },
   beforeUnmount() {
     this.$emitter.off('openModal');
   },
   methods: {
+    resolveComponentHint(field) {
+      return this.$meta[this.model]?.properties[field.key]?.comment || null;
+    },
+    resolveRequired(field) {
+      return !this.$meta[this.model]?.properties[field.key]?.nullable || false;
+    },
+    resolveComponentName(field) {
+      const type = this.$meta[this.model]?.properties[field.key]?.type || field.type;
+      if (['string', 'number', 'integer'].includes(type)) {
+        if (this.$meta[this.model]?.properties[field.key]?.format == 'json') {
+          return 'v-textarea';
+        } else {
+          return 'v-text-field';
+        }
+      } else if (type == 'boolean') {
+        return 'v-checkbox';
+      } else if (type == 'textarea') {
+        return 'v-text-field';
+      } else if (type == 'schema') {
+        return 'JsonEditor';
+      }
+    },
+    resolveFieldRelation(field) {
+      return !!this.$meta[this.model]?.properties[field.key]?.ref;
+    },
+    resolveComponentType(field) {
+      const type = this.$meta[this.model]?.properties[field.key]?.type || field.type;
+      if (type == 'string') {
+        return 'text';
+      } else if (['number', 'integer'].includes(type)) {
+        return 'number';
+      } else if (type == 'textarea') {
+        return 'textarea';
+      } else {
+        return null;
+      }
+    },
     close() {
       this.expand = false;
       this.show = false;
@@ -120,19 +179,34 @@ export default {
         this.gridApi.redrawRows();
       }
     },
+    makeData() {
+      const data = this.payload.hidden?.reduce((s, c) => {
+        if (c.key) {
+          s[c.key] = c.value;
+        }
+        return s;
+      }, {});
+      for (const field of this.payload.fields) {
+        const type = this.$meta[this.model]?.properties[field.key]?.type || field.type;
+        if (type == 'boolean') {
+          data[field.key] = !!field.value;
+        } else if (['number', 'integer'].includes(type)) {
+          data[field.key] = parseFloat(field.value);
+        } else {
+          if (field.value == '') {
+            data[field.key] = null;
+          } else {
+            data[field.key] = field.value;
+          }
+        }
+      }
+      return data;
+    },
     save() {
       this.$http({
         method: this.payload.method,
         url: `/v1${this.payload.url}`,
-        data: this.payload.fields.reduce(
-          (s, c) => {
-            if (c.key) {
-              s[c.key] = c.value;
-            }
-            return s;
-          },
-          { model: this.payload.model },
-        ),
+        data: this.makeData(),
       }).then((res) => {
         this.payload.eventName && this.$emitter.emit(this.payload.eventName, res.data);
         this.close();
@@ -145,5 +219,13 @@ export default {
 .dialog-bottom-transition-enter-active,
 .dialog-bottom-transition-leave-active {
   transition: transform 0.3s ease-in-out;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.v-messages__message {
+  margin-bottom: 10px;
 }
 </style>
