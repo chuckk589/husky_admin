@@ -1,5 +1,5 @@
 FROM node:16-alpine as base
-RUN apk add bash yarn>=1.22.4
+RUN apk add yarn>=1.22.4
 WORKDIR /app
 COPY package.json tsconfig.json yarn.lock  ./
 RUN yarn --frozen-lockfile
