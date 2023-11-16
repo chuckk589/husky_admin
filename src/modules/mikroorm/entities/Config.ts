@@ -20,7 +20,7 @@ export class Config {
   @Property({ length: 255, nullable: true })
   description?: string;
 
-  @Enum({ items: () => ConfigType, default: ConfigType.DEFAULT })
+  @Enum({ items: () => ConfigType, default: ConfigType.DEFAULT, nullable: true })
   type: ConfigType;
 
   @BeforeUpdate()
