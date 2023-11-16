@@ -23,7 +23,7 @@ export class AppConfigModule {
     };
     return {
       module: AppConfigModule,
-      imports: [ConfigModule.forRoot()],
+      imports: [ConfigModule.forRoot(options)],
       providers: [ConfigProvider],
       exports: [ConfigModule],
     };

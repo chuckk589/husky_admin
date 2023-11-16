@@ -1,4 +1,5 @@
-import { Entity, Enum, PrimaryKey, Property, Unique } from '@mikro-orm/core';
+import { Entity, Enum, PrimaryKey, Property, Unique, BeforeUpdate, EventArgs } from '@mikro-orm/core';
+import { hash } from 'bcrypt';
 
 export enum ConfigType {
   DEFAULT = 'DEFAULT',
@@ -20,5 +21,12 @@ export class Config {
   description?: string;
 
   @Enum({ items: () => ConfigType, default: ConfigType.DEFAULT })
-  type = ConfigType.DEFAULT;
+  type: ConfigType;
+
+  @BeforeUpdate()
+  async beforeUpdate(args: EventArgs<Config>): Promise<void> {
+    if (this.name == 'ADMIN_PASSCODE' && args.changeSet.payload.value) {
+      this.value = await hash(args.changeSet.payload.value, 6);
+    }
+  }
 }

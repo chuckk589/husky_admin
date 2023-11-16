@@ -8,23 +8,26 @@ import { PG_CONNECTION } from 'src/constants';
 export class PostgresDatabaseProvider extends DatabaseProvider {
   constructor(private readonly em: EntityManager) {
     super();
-    this.connect().catch((err) => console.error(err));
   }
 
   public async connect(): Promise<void> {
     try {
       const dbParams = await this.em.find(Config, {});
       this.client = new Client({
-        user: dbParams.find((param) => param.name == 'DB_USER')?.value,
-        host: dbParams.find((param) => param.name == 'DB_HOST')?.value,
-        database: dbParams.find((param) => param.name == 'DB_NAME')?.value,
-        password: dbParams.find((param) => param.name == 'DB_PASSWORD')?.value,
-        port: parseInt(dbParams.find((param) => param.name == 'DB_PORT')?.value),
+        user: dbParams.find((param) => param.name == 'DB_PGUSER')?.value,
+        host: dbParams.find((param) => param.name == 'DB_PGHOST')?.value,
+        database: dbParams.find((param) => param.name == 'DB_PGNAME')?.value,
+        password: dbParams.find((param) => param.name == 'DB_PGPASSWORD')?.value,
+        port: parseInt(dbParams.find((param) => param.name == 'DB_PGPORT')?.value),
       });
 
-      return await this.client.connect();
+      return await this.client.connect((err: any) => {
+        if (err) {
+          console.error(`PG connection wasnt established: ${err.message}`);
+        }
+      });
     } catch (error) {
-      return error;
+      console.error(error);
     }
   }
 }

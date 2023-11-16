@@ -12,23 +12,23 @@ export class ConfigSeeder extends Seeder {
     });
 
     em.create(Config, {
-      name: 'DB_HOST',
+      name: 'DB_PGHOST',
       value: 'localhost',
     });
     em.create(Config, {
-      name: 'DB_PORT',
+      name: 'DB_PGPORT',
       value: '5432',
     });
     em.create(Config, {
-      name: 'DB_NAME',
+      name: 'DB_PGNAME',
       value: 'postgres',
     });
     em.create(Config, {
-      name: 'DB_USER',
+      name: 'DB_PGUSER',
       value: 'postgres',
     });
     em.create(Config, {
-      name: 'DB_PASSWORD',
+      name: 'DB_PGPASSWORD',
       value: 'postgres',
       type: ConfigType.PASSWORD,
     });

@@ -35,7 +35,13 @@ export default {
           hide: true,
         },
         { field: 'name', headerName: 'Имя' },
-        { field: 'value', headerName: 'Значение' },
+        {
+          field: 'value',
+          headerName: 'Значение',
+          valueFormatter: (params) => {
+            console.log(params);
+          },
+        },
         { field: 'description', headerName: 'Описание' },
         {
           field: 'action',
