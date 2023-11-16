@@ -9,7 +9,7 @@ services:
       - MYSQL_ROOT_PASSWORD=ssqwec
       - MYSQL_DATABASE=husky
     volumes:
-      - db:/var/lib/mysql
+      - db:/var/lib/mysqle
     ports:
     - 3307:3306
   app:
